@@ -117,7 +117,12 @@ def generate_json(task, folder, nb_camera):
 
 
 def kinovea_to_json(
-    task: str, folder_path: Path, nb_camera: int, list_marker: list, import_from_excel = False, export_excel=False
+    task: str,
+    folder_path: Path,
+    nb_camera: int,
+    list_marker: list,
+    import_from_excel=False,
+    export_excel=False,
 ) -> None:
     """Convert kinovea data to json format to be used in LBMC marker less
     The file are expected to be in the format task_camera_0i.txt contained in the folder with folder_path
@@ -220,5 +225,11 @@ if __name__ == "__main__":
 
     kinovea_to_json("pas", folder_path, nb_camera, list_marker)
     kinovea_to_json("trop", folder_path, nb_camera, list_marker)
-    kinovea_to_json("nouvelle_origine_trot", folder_path, nb_camera, list_marker, import_from_excel=True)
+    kinovea_to_json(
+        "nouvelle_origine_trot",
+        folder_path,
+        nb_camera,
+        list_marker,
+        import_from_excel=True,
+    )
     print("Done!")
