@@ -4,7 +4,7 @@ import json
 import numpy as np
 from pathlib import Path
 import os
-
+import shutil
 
 def read_kinovea_trajectory(file_path):
     # Initialize an empty dictionary to hold the data
@@ -223,13 +223,26 @@ if __name__ == "__main__":
         "hanche",
     ]
 
-    kinovea_to_json("pas", folder_path, nb_camera, list_marker)
-    kinovea_to_json("trop", folder_path, nb_camera, list_marker)
+    kinovea_to_json("pas", folder_path, nb_camera, list_marker, export_excel=True)
+    # define source and destination
+    source = Path("pas.xlsx")
+    destination = folder_path/ "pas.xlsx"
+
+    # check if source file exists
+    if source.exists():
+        # move the file to the new location
+        shutil.move(str(source), str(destination))
+    else:
+        print(f"Source file {source} does not exist.")
+    # Regenerate the data from a excel file that has been generated
     kinovea_to_json(
-        "nouvelle_origine_trot",
+        "pas",
         folder_path,
         nb_camera,
         list_marker,
         import_from_excel=True,
     )
+
+    kinovea_to_json("trop", folder_path, nb_camera, list_marker)
+
     print("Done!")
