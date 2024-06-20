@@ -6,6 +6,7 @@ from pathlib import Path
 import os
 import shutil
 
+
 def read_kinovea_trajectory(file_path):
     # Initialize an empty dictionary to hold the data
     data = {}
@@ -25,9 +26,7 @@ def read_kinovea_trajectory(file_path):
             # If there's data for the previous marker, add it to the dictionary
             if current_marker_data:
                 if current_marker_name not in data.keys():
-                    data[current_marker_name] = pd.DataFrame(
-                        current_marker_data, columns=["T", "X", "Y"]
-                    )
+                    data[current_marker_name] = pd.DataFrame(current_marker_data, columns=["T", "X", "Y"])
                 else:
                     data[current_marker_name] = pd.concat(
                         [
@@ -61,9 +60,7 @@ def read_kinovea_trajectory(file_path):
 
     # Add the last marker's data to the dictionary
     if current_marker_name not in data.keys():
-        data[current_marker_name] = pd.DataFrame(
-            current_marker_data, columns=["T", "X", "Y"]
-        )
+        data[current_marker_name] = pd.DataFrame(current_marker_data, columns=["T", "X", "Y"])
     else:
         data[current_marker_name] = pd.concat(
             [
@@ -187,14 +184,14 @@ def kinovea_to_json(
                         value_Y = 0
                         value_confidence = 0
 
-                    data_to_export["pose_keypoints_2d"] = data_to_export[
-                        "pose_keypoints_2d"
-                    ] + [value_X, value_Y, value_confidence]
+                    data_to_export["pose_keypoints_2d"] = data_to_export["pose_keypoints_2d"] + [
+                        value_X,
+                        value_Y,
+                        value_confidence,
+                    ]
                 else:
                     # si la collumn n'existe pas on met des 0
-                    data_to_export["pose_keypoints_2d"] = data_to_export[
-                        "pose_keypoints_2d"
-                    ] + [0, 0, 0]
+                    data_to_export["pose_keypoints_2d"] = data_to_export["pose_keypoints_2d"] + [0, 0, 0]
             final_dict = dict()
             final_dict["version"] = 1.3
 
@@ -226,7 +223,7 @@ if __name__ == "__main__":
     kinovea_to_json("pas", folder_path, nb_camera, list_marker, export_excel=True)
     # define source and destination
     source = Path("pas.xlsx")
-    destination = folder_path/ "pas.xlsx"
+    destination = folder_path / "pas.xlsx"
 
     # check if source file exists
     if source.exists():
