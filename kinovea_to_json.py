@@ -218,7 +218,7 @@ if __name__ == "__main__":
         "hanche",
     ]
 
-    #kinovea_to_json("pas", folder_path, nb_camera, list_marker)
-    #kinovea_to_json("trop", folder_path, nb_camera, list_marker)
+    kinovea_to_json("pas", folder_path, nb_camera, list_marker)
+    kinovea_to_json("trop", folder_path, nb_camera, list_marker)
     kinovea_to_json("nouvelle_origine_trot", folder_path, nb_camera, list_marker, import_from_excel=True)
     print("Done!")
