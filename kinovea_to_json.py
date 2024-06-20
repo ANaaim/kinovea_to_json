@@ -197,7 +197,6 @@ def kinovea_to_json(
 
 
 if __name__ == "__main__":
-    task = "pas"
     folder_path = Path("data_kinovea")
     nb_camera = 6
     list_marker = [
@@ -209,5 +208,6 @@ if __name__ == "__main__":
         "hanche",
     ]
 
-    kinovea_to_json(task, folder_path, nb_camera, list_marker)
+    kinovea_to_json("pas", folder_path, nb_camera, list_marker)
+    kinovea_to_json("trop", folder_path, nb_camera, list_marker)
     print("Done!")
