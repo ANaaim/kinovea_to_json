@@ -117,7 +117,7 @@ def generate_json(task, folder, nb_camera):
 
 
 def kinovea_to_json(
-    task: str, folder_path: Path, nb_camera: int, list_marker: list, export_excel=False
+    task: str, folder_path: Path, nb_camera: int, list_marker: list, import_from_excel = False, export_excel=False
 ) -> None:
     """Convert kinovea data to json format to be used in LBMC marker less
     The file are expected to be in the format task_camera_0i.txt contained in the folder with folder_path
@@ -133,20 +133,30 @@ def kinovea_to_json(
         The number of camera used
     list_marker : list
         The list of marker used in the kinovea data
+    import_from_excel : bool, optional
+        If True, import the final data from an Excel file, by default False. The file is expected to be in the folder_path
+        with the name task.xlsx
+    export_excel : bool, optional
+        If True, export the final data in an Excel file, by default False
 
     Returns
     -------
     None
 
     """
-    list_merged_data = generate_json(task, folder_path, nb_camera)
-
-    # # Use the reduce function to apply the merge_nearest function to all dataframes in the list
-    final_data = reduce(merge_nearest, list_merged_data)
+    if import_from_excel:
+        # read final data from excel
+        filename = f"{task}.xlsx"
+        path_file = Path(folder_path, filename)
+        final_data = pd.read_excel(path_file)
+    else:
+        list_merged_data = generate_json(task, folder_path, nb_camera)
+        # # Use the reduce function to apply the merge_nearest function to all dataframes in the list
+        final_data = reduce(merge_nearest, list_merged_data)
 
     if export_excel:
         # # Export final data
-        final_data.to_excel(f"final_data_{task}.xlsx", index=False)
+        final_data.to_excel(f"{task}.xlsx", index=False)
 
     # Export all the data in json looking like the openpose format
     # for each line we have the time and the x and y coordinates of each marker for each camera
@@ -208,6 +218,7 @@ if __name__ == "__main__":
         "hanche",
     ]
 
-    kinovea_to_json("pas", folder_path, nb_camera, list_marker)
-    kinovea_to_json("trop", folder_path, nb_camera, list_marker)
+    #kinovea_to_json("pas", folder_path, nb_camera, list_marker)
+    #kinovea_to_json("trop", folder_path, nb_camera, list_marker)
+    kinovea_to_json("nouvelle_origine_trot", folder_path, nb_camera, list_marker, import_from_excel=True)
     print("Done!")
