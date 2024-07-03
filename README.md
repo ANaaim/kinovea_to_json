@@ -9,7 +9,6 @@ Data will be directly exported in a folder of the task name containing the pose 
 ````python
 import kinovea_to_json as ktj
 from pathlib import Path
-import shutil
 
 folder_path = Path("data_kinovea")
 nb_camera = 6
@@ -22,29 +21,7 @@ list_marker = [
         "hanche",
     ]
 
-ktj.kinovea_to_json("pas", folder_path, nb_camera, list_marker, export_excel=True)
-# define source and destination
-source = Path("pas.xlsx")
-destination = folder_path / "pas.xlsx"
 
-    # check if source file exists
-if source.exists():
-        # move the file to the new location
-    shutil.move(str(source), str(destination))
-else:
-    print(f"Source file {source} does not exist.")
-# Regenerate the data from a excel file that has been generated
-ktj.kinovea_to_json(
-        "pas",
-        folder_path,
-        nb_camera,
-        list_marker,
-        import_from_excel=True,
-    )
-
-ktj.kinovea_to_json("trop", folder_path, nb_camera, list_marker)
-
-print("Done!")
-
+ktj.kinovea_to_json("pas", folder_path, 6, list_marker, import_from_excel=True)
 
 ````
